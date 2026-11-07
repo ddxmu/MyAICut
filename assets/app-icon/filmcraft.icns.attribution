@@ -1,0 +1,8 @@
+asset:        filmcraft.icns
+title:        MyAICut app icon (assets/app-icon/filmcraft.icns.attribution)
+author:       MyAICut project
+source:       original artwork for MyAICut: camera lens, 35 mm film strip and CUT wordmark
+license:      MIT OR Apache-2.0
+license-file: assets/app-icon/LICENSE.txt
+added:        2026-11-07
+notes:        Replaces the upstream FilmCraft icon. Generated from assets/app-icon/filmcraft.svg.
