@@ -1,0 +1,11 @@
+*~
+plan/
+/target
+/dist
+/log
+.DS_Store
+.claude/worktrees/
+__pycache__/
+
+# Build outputs in nested crates (root /target is already ignored).
+/crates/*/target/
