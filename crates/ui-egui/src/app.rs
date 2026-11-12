@@ -44,6 +44,8 @@ impl FilmcraftApp {
             // Unsaved changes left by a session that died are offered first thing.
             dialog: recovery.then_some(Dialog::Recovery),
             updates_rt: Default::default(),
+            #[cfg(not(target_arch = "wasm32"))]
+            ai: Default::default(),
             file_dialogs: Default::default(),
             native_dialog: None,
             overwrite_prompt: None,
@@ -277,6 +279,8 @@ impl FilmcraftApp {
         // poll asks for the next frame, so its finished frames would wait for the mouse (#2438 review)
         self.frames.set_context(ctx);
         updates_ui::tick(self, ctx);
+        #[cfg(not(target_arch = "wasm32"))]
+        ai_ui::tick(self, ctx);
         #[cfg(not(target_arch = "wasm32"))]
         self.tick_media_refresh(ctx, now);
     }

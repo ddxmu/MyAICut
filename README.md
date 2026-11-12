@@ -14,6 +14,21 @@ The interface follows the operating system language by default:
 - Japanese system language → Japanese UI
 - other languages → the matching FilmCraft catalog, or English when there is none
 
+## AI assistant
+
+Select **AI** next to **Export**, then open **AI Settings**. Enter an
+OpenAI-compatible API base URL and key, fetch the model list, select a model
+that supports tool calling, and save. You can also type a model ID directly.
+Describe the edit you want in chat. The assistant can inspect the open project
+and use the same commands as the editor, including timeline edits, effects,
+captions, audio and export. Review and approve prompts for file operations.
+
+Prompts, project details and tool results are sent to your selected provider.
+The optional video preview sends one frame at the playhead and requires a
+vision-capable model. The key is stored in the local MyAICut data directory,
+outside the app and the project. Stop cancels future tool calls; edits already
+made can be undone in the editor.
+
 ## Updates
 
 MyAICut checks the latest stable GitHub release at launch. **MyAICut → Check for

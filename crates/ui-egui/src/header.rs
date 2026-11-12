@@ -60,6 +60,8 @@ pub fn show(app: &mut FilmcraftApp, ui: &mut egui::Ui, rect: Rect) {
         }
         x += gw + 24.0;
     }
+    #[cfg(not(target_arch = "wasm32"))]
+    let x = crate::ai_ui::header_button(app, ui, rect, x);
     let mut left_end = x;
     // In-window menus when there is no native menu bar.
     if app.ui.show_menu_bar {
