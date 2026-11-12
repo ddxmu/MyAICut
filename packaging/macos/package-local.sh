@@ -44,10 +44,9 @@ mkdir -p "$STAGE"
 ditto "$APP" "$STAGE/MyAICut.app"
 ln -s /Applications "$STAGE/Applications"
 
-hdiutil makehybrid -hfs -hfs-volume-name "MyAICut" -hfs-openfolder "$STAGE" \
-  -o "$WORK/raw.dmg" "$STAGE" >/dev/null
-hdiutil convert "$WORK/raw.dmg" -format UDZO -imagekey zlib-level=9 \
-  -o "$WORK/MyAICut.dmg" >"$WORK/convert.log" 2>&1
+# HFS+ preserves the signed bundle without adding legacy FinderInfo to its files.
+hdiutil create -srcfolder "$STAGE" -volname "MyAICut" -fs HFS+ \
+  -format UDZO -imagekey zlib-level=9 "$WORK/MyAICut.dmg"
 python3 - "$WORK/MyAICut.dmg" <<'PY'
 import sys
 b = open(sys.argv[1], "rb").read()
