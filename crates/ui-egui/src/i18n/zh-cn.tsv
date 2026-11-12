@@ -292,6 +292,48 @@
 	Rose	玫瑰红
 	Safe Margins	安全边距
 	Save	保存
+	MyAICut AI Assistant	MyAICut AI 助手
+	AI Settings…	AI 设置…
+	AI Model Settings	AI 模型设置
+	Choose an AI model first.	请先选择 AI 模型。
+	Clear conversation	清空对话
+	Prompts, project details and tool results go to your configured AI service.	提示词、项目详情和工具执行结果会发送给你配置的 AI 服务。
+	Describe what you want to do, for example: Cut the first clip at 3 seconds.	请描述想做的操作，例如：在第 3 秒切开第一个片段。
+	You	你
+	Allow this action?	允许此操作吗？
+	Allow	允许
+	Deny	拒绝
+	Working… {n} tool calls	执行中… 已调用工具 {n} 次
+	Send the current video frame to the model	将当前视频帧发送给模型
+	Describe your editing request…	描述你的剪辑需求…
+	Send	发送
+	Use an OpenAI-compatible service and a model that supports tool calling. Sending a frame also requires image support.	请使用兼容 OpenAI API 且支持工具调用的模型。发送画面还需要模型支持图像输入。
+	The API key is saved locally, outside the app bundle.	API 密钥保存在本机，独立于应用安装包。
+	API Base URL	API 地址
+	API Key	API 密钥
+	Choose model	选择模型
+	Fetch models	拉取模型
+	Tool calls per request	单次请求工具调用上限
+	Test connection	测试连接
+	Could not start the AI request.	无法启动 AI 请求。
+	Could not render the current frame.	无法渲染当前画面。
+	The project changed. The AI task was stopped.	项目已切换，AI 任务已停止。
+	The AI request ended unexpectedly.	AI 请求意外结束。
+	Could not read AI settings.	无法读取 AI 设置。
+	AI task stopped.	AI 任务已停止。
+	Model list loaded.	模型列表已加载。
+	Connection successful.	连接成功。
+	Could not save AI settings.	无法保存 AI 设置。
+	Enter a valid API base URL.	请输入有效的 API 地址。
+	Use HTTPS for a remote AI service.	远程 AI 服务必须使用 HTTPS。
+	Could not reach the AI service. Check the address and connection.	无法连接 AI 服务，请检查地址和网络。
+	Could not read the AI response.	无法读取 AI 响应。
+	The AI service returned invalid JSON.	AI 服务返回了无效的 JSON。
+	The AI service returned no model list.	AI 服务没有返回模型列表。
+	The AI service returned no assistant message.	AI 服务没有返回助手消息。
+	AI tool call limit reached.	已达到 AI 工具调用上限。
+	The AI service returned an invalid tool call.	AI 服务返回了无效的工具调用。
+	AI tool results exceeded the conversation limit.	AI 工具结果超过对话容量上限。
 	Save All	全部保存
 	Save As…	另存为…
 	Save Guides as Template…	将参考线另存为模板…

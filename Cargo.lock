@@ -479,6 +479,12 @@ checksum = "4c7f02d4ea65f2c1853089ffd8d2787bdbc63de2f0d29dedbcf8ccdfa0ccd4cf"
 
 [[package]]
 name = "base64"
+version = "0.22.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6"
+
+[[package]]
+name = "base64"
 version = "0.23.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ac07cdecf99051d9a5238b80f35af32cdeba5b336e55d957b318b50137e18da5"
@@ -1873,7 +1879,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "arboard",
  "chrono",
@@ -1908,7 +1914,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-aac"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-bitstream",
  "filmcraft-testkit",
@@ -1918,7 +1924,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-ac3"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-testkit",
  "thiserror 2.0.21",
@@ -1926,7 +1932,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-apv"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-bitstream",
  "filmcraft-testkit",
@@ -1936,16 +1942,16 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-audio-dsp"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-testkit",
 ]
 
 [[package]]
 name = "filmcraft-automation"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
- "base64",
+ "base64 0.23.1",
  "filmcraft-engine",
  "filmcraft-time",
  "image",
@@ -1960,7 +1966,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-av1"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-bitstream",
  "filmcraft-testkit",
@@ -1971,21 +1977,21 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-avi"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-testkit",
 ]
 
 [[package]]
 name = "filmcraft-bitstream"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "craft-media",
 ]
 
 [[package]]
 name = "filmcraft-captions"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-color",
  "filmcraft-project",
@@ -1998,11 +2004,11 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-cfb"
-version = "0.17.1"
+version = "0.17.2"
 
 [[package]]
 name = "filmcraft-cli"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-automation",
  "filmcraft-codecs",
@@ -2024,7 +2030,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-codecs"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-aac",
  "filmcraft-ac3",
@@ -2062,7 +2068,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-color"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "proptest",
  "serde",
@@ -2070,7 +2076,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-dng"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-dng",
  "rayon",
@@ -2079,7 +2085,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-dnx"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-bitstream",
  "filmcraft-testkit",
@@ -2089,7 +2095,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-edit"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-geom",
  "filmcraft-media",
@@ -2102,7 +2108,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-engine"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "chrono",
  "craft-docpath",
@@ -2139,7 +2145,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-export"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-aac",
  "filmcraft-apv",
@@ -2170,7 +2176,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-flac"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-bitstream",
  "filmcraft-testkit",
@@ -2179,7 +2185,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-format"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "chrono",
  "filmcraft-media",
@@ -2194,7 +2200,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-frame"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-color",
  "filmcraft-time",
@@ -2204,7 +2210,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-geom"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "proptest",
  "serde",
@@ -2212,7 +2218,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-golden"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-color",
  "filmcraft-frame",
@@ -2229,7 +2235,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-gpu"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-color",
  "filmcraft-export",
@@ -2248,7 +2254,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-h264"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-bitstream",
  "filmcraft-testkit",
@@ -2258,7 +2264,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-h264enc"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-bitstream",
  "filmcraft-testkit",
@@ -2268,7 +2274,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-hevc"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-bitstream",
  "filmcraft-testkit",
@@ -2278,7 +2284,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-interchange"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-cfb",
  "filmcraft-color",
@@ -2295,7 +2301,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-isobmff"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "craft-media",
  "filmcraft-testkit",
@@ -2305,7 +2311,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-matroska"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "craft-media",
  "filmcraft-testkit",
@@ -2314,7 +2320,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-media"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-color",
  "filmcraft-dng",
@@ -2330,7 +2336,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-mpa"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-bitstream",
  "filmcraft-testkit",
@@ -2339,7 +2345,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-mpeg2v"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-testkit",
  "rayon",
@@ -2348,7 +2354,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-mpegts"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-testkit",
  "thiserror 2.0.21",
@@ -2356,7 +2362,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-mxf"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "chrono",
  "filmcraft-testkit",
@@ -2364,21 +2370,21 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-ogg"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-testkit",
 ]
 
 [[package]]
 name = "filmcraft-opus"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-testkit",
 ]
 
 [[package]]
 name = "filmcraft-platform"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-bitstream",
  "filmcraft-codecs",
@@ -2404,7 +2410,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-project"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-color",
  "filmcraft-geom",
@@ -2419,7 +2425,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-prores"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-bitstream",
  "filmcraft-testkit",
@@ -2429,7 +2435,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-render"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-audio-dsp",
  "filmcraft-captions",
@@ -2449,7 +2455,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-scopes"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-color",
  "serde",
@@ -2458,7 +2464,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-speech"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "candle-core",
  "candle-nn",
@@ -2477,7 +2483,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-testkit"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "chrono",
  "png",
@@ -2486,7 +2492,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-text"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-color",
  "harfrust",
@@ -2499,7 +2505,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-time"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "proptest",
  "serde",
@@ -2507,7 +2513,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-tts"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "candle-core",
  "candle-nn",
@@ -2522,7 +2528,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-tts-text"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "serde",
  "thiserror 2.0.21",
@@ -2530,8 +2536,9 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-ui-egui"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
+ "base64 0.22.1",
  "cpu-time",
  "craft-ui",
  "craft-update",
@@ -2568,12 +2575,13 @@ dependencies = [
  "tempfile",
  "toml 1.1.6+spec-1.1.0",
  "unicode-bidi",
+ "ureq",
  "web-time",
 ]
 
 [[package]]
 name = "filmcraft-vp8"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-testkit",
  "thiserror 2.0.21",
@@ -2581,7 +2589,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-vp9"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-bitstream",
  "filmcraft-testkit",
@@ -2591,7 +2599,7 @@ dependencies = [
 
 [[package]]
 name = "filmcraft-web"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "craft-web-host",
  "eframe",
@@ -5053,7 +5061,7 @@ version = "1.10.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "327a4cb2ad49dc48adfdc9da89e22c64d488b508c67a044d71ba729e4521a285"
 dependencies = [
- "base64",
+ "base64 0.23.1",
  "indexmap",
  "quick-xml 0.42.0",
  "serde",
@@ -6986,7 +6994,7 @@ version = "3.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cde93ff05758a36a851a398a772b0b79a82fbe3c186a46f2696baaeaf84c966b"
 dependencies = [
- "base64",
+ "base64 0.23.1",
  "flate2",
  "log",
  "percent-encoding",
@@ -7003,7 +7011,7 @@ version = "0.6.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "841583fc36089d7d59419568ae157f43a5a03a2e5a81ba87c77d1596ef46e922"
 dependencies = [
- "base64",
+ "base64 0.23.1",
  "http",
  "httparse",
  "log",
@@ -8090,7 +8098,7 @@ checksum = "e450f9b2ed1dff33c94c12589a87338689467b9c4f5d8a5710bd09a847d2c8a7"
 
 [[package]]
 name = "xtask"
-version = "0.17.1"
+version = "0.17.2"
 dependencies = [
  "filmcraft-testkit",
  "serde_json",

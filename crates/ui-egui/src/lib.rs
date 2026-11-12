@@ -59,6 +59,8 @@ pub use dock_ui::area_id as dock_area_id;
 /// Thumbnail textures kept before the least recently used are freed (each is up to 320 px wide).
 const MAX_THUMB_TEXTURES: usize = 512;
 
+#[cfg(not(target_arch = "wasm32"))]
+mod ai_ui;
 pub mod frames;
 pub mod graphics_notice;
 pub mod header;
@@ -215,6 +217,8 @@ pub struct FilmcraftApp {
     pub hooks: HostHooks,
     pub dialog: Option<Dialog>,
     pub(crate) updates_rt: updates_ui::Runtime,
+    #[cfg(not(target_arch = "wasm32"))]
+    ai: ai_ui::Assistant,
     pub file_dialogs: panels::file_dialogs::FileDialogState,
     /// The native file dialog the host is showing ([`Self::pick`]).
     native_dialog: Option<native_dialogs::PendingDialog>,

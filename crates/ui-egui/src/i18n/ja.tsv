@@ -314,6 +314,48 @@
 	Rose	ローズ
 	Safe Margins	セーフマージン
 	Save	保存
+	MyAICut AI Assistant	MyAICut AI アシスタント
+	AI Settings…	AI 設定…
+	AI Model Settings	AI モデル設定
+	Choose an AI model first.	先に AI モデルを選択してください。
+	Clear conversation	会話を消去
+	Prompts, project details and tool results go to your configured AI service.	プロンプト、プロジェクトの詳細、ツールの実行結果は、設定した AI サービスに送信されます。
+	Describe what you want to do, for example: Cut the first clip at 3 seconds.	操作を説明してください。例：最初のクリップを 3 秒の位置で分割。
+	You	あなた
+	Allow this action?	この操作を許可しますか？
+	Allow	許可
+	Deny	拒否
+	Working… {n} tool calls	実行中… ツール呼び出し {n} 回
+	Send the current video frame to the model	現在の映像フレームをモデルに送信
+	Describe your editing request…	編集の指示を入力…
+	Send	送信
+	Use an OpenAI-compatible service and a model that supports tool calling. Sending a frame also requires image support.	OpenAI 互換サービスとツール呼び出し対応モデルを指定してください。フレーム送信には画像入力への対応も必要です。
+	The API key is saved locally, outside the app bundle.	API キーはアプリ本体とは別に、この端末に保存されます。
+	API Base URL	API ベース URL
+	API Key	API キー
+	Choose model	モデルを選択
+	Fetch models	モデル一覧を取得
+	Tool calls per request	リクエストごとのツール呼び出し上限
+	Test connection	接続テスト
+	Could not start the AI request.	AI リクエストを開始できませんでした。
+	Could not render the current frame.	現在のフレームを描画できませんでした。
+	The project changed. The AI task was stopped.	プロジェクトが切り替わったため、AI タスクを停止しました。
+	The AI request ended unexpectedly.	AI リクエストが予期せず終了しました。
+	Could not read AI settings.	AI 設定を読み込めませんでした。
+	AI task stopped.	AI タスクを停止しました。
+	Model list loaded.	モデル一覧を取得しました。
+	Connection successful.	接続に成功しました。
+	Could not save AI settings.	AI 設定を保存できませんでした。
+	Enter a valid API base URL.	有効な API ベース URL を入力してください。
+	Use HTTPS for a remote AI service.	リモート AI サービスには HTTPS を使用してください。
+	Could not reach the AI service. Check the address and connection.	AI サービスに接続できません。URL と接続を確認してください。
+	Could not read the AI response.	AI の応答を読み取れませんでした。
+	The AI service returned invalid JSON.	AI サービスから無効な JSON が返されました。
+	The AI service returned no model list.	AI サービスからモデル一覧が返されませんでした。
+	The AI service returned no assistant message.	AI サービスからメッセージが返されませんでした。
+	AI tool call limit reached.	AI ツール呼び出しが上限に達しました。
+	The AI service returned an invalid tool call.	AI サービスから無効なツール呼び出しが返されました。
+	AI tool results exceeded the conversation limit.	AI ツールの結果が会話の上限を超えました。
 	Save All	すべて保存
 	Save As…	別名で保存…
 	Save Guides as Template…	ガイドをテンプレートとして保存…
