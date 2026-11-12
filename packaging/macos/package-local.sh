@@ -59,9 +59,14 @@ codesign --verify --strict --verbose=2 "$VERSIONED_DMG"
 cp "$VERSIONED_DMG" "$DMG"
 
 ditto -c -k --keepParent "$APP" "$UPDATE_ZIP"
+if [[ -n "${MYAICUT_PREVIOUS_APP:-}" ]]; then
+  python3 "$ROOT/packaging/macos/make-delta.py" "$MYAICUT_PREVIOUS_APP" "$APP" "$UPDATE_ZIP" "$ARCH"
+fi
 (
   cd "$DIST"
-  shasum -a 256 "$(basename "$VERSIONED_DMG")" "$(basename "$UPDATE_ZIP")" >"$(basename "$SUMS")"
+  shopt -s nullglob
+  deltas=(myaicut-"$VERSION"-macos-"$ARCH"-from-*-delta.zip)
+  shasum -a 256 "$(basename "$VERSIONED_DMG")" "$(basename "$UPDATE_ZIP")" "${deltas[@]}" >"$(basename "$SUMS")"
 )
 
 echo "APP=$APP"

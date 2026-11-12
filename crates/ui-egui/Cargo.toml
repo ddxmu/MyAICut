@@ -70,3 +70,6 @@ craft-update = { workspace = true }
 base64 = "0.22"
 tempfile = "3"
 ureq = { version = "3", default-features = false, features = ["rustls-no-provider", "platform-verifier", "gzip"] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+zip = { version = "7.2", default-features = false }
