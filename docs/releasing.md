@@ -11,10 +11,11 @@ For an Apple-silicon build:
 ```sh
 VERSION="$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)"
 cargo build --release --locked -p filmcraft
-bash packaging/macos/package-local.sh
+MYAICUT_PREVIOUS_APP="/path/to/previous/MyAICut.app" bash packaging/macos/package-local.sh
 gh release create "v$VERSION" \
   --repo ddxmu/MyAICut \
   "dist/myaicut-$VERSION-macos-aarch64-update.zip" \
+  dist/myaicut-"$VERSION"-macos-aarch64-from-*-delta.zip \
   "dist/myaicut-$VERSION-macos-aarch64.dmg" \
   dist/SHA256SUMS.txt
 ```
@@ -23,6 +24,15 @@ The updater requires the exact app-only ZIP name
 `myaicut-<version>-macos-aarch64-update.zip`, with `MyAICut.app` at its top level,
 and a matching entry in `SHA256SUMS.txt`. Never replace an already published
 version; bump `[workspace.package] version` first.
+
+Install [bsdiff4](https://github.com/ilanschnell/bsdiff4) in the build machine's Python 3.11+
+environment and use the exact app from the previous release for `MYAICUT_PREVIOUS_APP`.
+The package script adds a ZIP containing the executable patch and changed bundle files
+to `SHA256SUMS.txt`. To cover another older release, run the packaging script against that
+base too and attach each delta. Only publish deltas that are smaller than the full ZIP.
+Starting with 0.17.3, MyAICut automatically chooses a delta for the installed version,
+executable hash and Mac architecture. It verifies the rebuilt app before installation
+and uses the full ZIP when a matching delta is unavailable or fails verification.
 
 The rest of this document describes the inherited multi-platform upstream
 pipeline for reference.

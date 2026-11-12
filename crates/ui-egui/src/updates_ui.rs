@@ -1,8 +1,7 @@
-//! MyAICut updates from GitHub: check, verified incremental package, install and restart.
-//!
-//! The release feed is `ddxmu/MyAICut` on GitHub. Each release carries an update ZIP
-//! (`myaicut-<version>-macos-<arch>-update.zip`) and `SHA256SUMS.txt`, so the app downloads only
-//! the application bundle and never needs the source or the full disk image.
+//! MyAICut updates from GitHub: prefer an exact-base delta, verify, install and restart.
+
+#[cfg(target_os = "macos")]
+mod delta;
 
 #[cfg(not(target_arch = "wasm32"))]
 use std::path::{Path, PathBuf};
@@ -403,7 +402,11 @@ fn start_install(app: &mut FilmcraftApp, ctx: &egui::Context) {
     let (tx, rx) = channel();
     let ctx = ctx.clone();
     let spawned = std::thread::Builder::new().name("myaicut-update-install".into()).spawn(move || {
-        let result = std::panic::catch_unwind(|| prepare(&release, &tx)).unwrap_or_else(|_| Err("The update failed unexpectedly.".into()));
+        let result = std::panic::catch_unwind(|| {
+            let prepared = prepare(&release, &current_bundle()?, CURRENT_VERSION, &tx)?;
+            tx.send(InstallEvent::Prepared(prepared)).map_err(|_| "The update window closed before the package was ready.".to_owned())
+        })
+        .unwrap_or_else(|_| Err("The update failed unexpectedly.".into()));
         if let Err(error) = result {
             let _ = tx.send(InstallEvent::Failed(error));
         }
@@ -436,10 +439,50 @@ fn fetch_latest() -> Result<Option<Release>, String> {
 }
 
 #[cfg(not(target_arch = "wasm32"))]
-fn prepare(release: &Release, events: &std::sync::mpsc::Sender<InstallEvent>) -> Result<(), String> {
-    let asset = update_asset(release)?;
+fn prepare(release: &Release, base: &Path, source_version: &str, events: &std::sync::mpsc::Sender<InstallEvent>) -> Result<Prepared, String> {
+    #[cfg(not(target_os = "macos"))]
+    let _ = (base, source_version);
+    let full = update_asset(release)?;
     let http = Http::new(&format!("MyAICut/{CURRENT_VERSION}"))?;
-    let sha256 = checksum(release, asset, &http)?;
+    #[cfg(target_os = "macos")]
+    if let Ok(hash) = delta::base_hash(base)
+        && let Some(asset) = delta_asset(release, full, source_version, &hash)
+    {
+        let version = release.version_label();
+        let prepared = stage_update(&version, |staged| {
+            let archive = download_update(release, asset, &http, events)?;
+            delta::apply(&archive, base, staged, &hash)?;
+            Ok(archive)
+        });
+        match prepared {
+            Ok(prepared) => {
+                log::info!("Prepared MyAICut delta update: {} ({} bytes)", asset.name, asset.size);
+                return Ok(prepared);
+            }
+            Err(error) => log::warn!("MyAICut delta update failed, using the full package: {error}"),
+        }
+    }
+    stage_update(&release.version_label(), |staged| {
+        let archive = download_update(release, full, &http, events)?;
+        let root = staged.parent().ok_or("Missing update staging folder.")?;
+        run(Path::new("/usr/bin/ditto"), &["-x", "-k", path_str(&archive)?, path_str(root)?]).map_err(|e| format!("Could not unpack the update ({e})."))?;
+        Ok(archive)
+    })
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+fn stage_update(version: &str, stage: impl FnOnce(&Path) -> Result<PathBuf, String>) -> Result<Prepared, String> {
+    let staging = tempfile::Builder::new().prefix("myaicut-update-").tempdir().map_err(|e| e.to_string())?;
+    let staged = staging.path().join("MyAICut.app");
+    let archive = stage(&staged)?;
+    verify_bundle(&staged, version)?;
+    Ok(Prepared { staged, staging_root: staging.keep(), archive, version: version.into() })
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+fn download_update(release: &Release, asset: &craft_update::Asset, http: &Http, events: &std::sync::mpsc::Sender<InstallEvent>) -> Result<PathBuf, String> {
+    let _ = events.send(InstallEvent::Progress(0, asset.size));
+    let sha256 = checksum(release, asset, http)?;
     let archive = update_cache().join(&asset.name);
     let stop = craft_update::Stop::default();
     http.download(&asset.url, &archive, asset.size, &sha256, &stop, &mut |transfer| {
@@ -449,24 +492,16 @@ fn prepare(release: &Release, events: &std::sync::mpsc::Sender<InstallEvent>) ->
         let _ = events.send(InstallEvent::Progress(done, asset.size));
     })?;
 
-    let stamp = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map_or(0, |d| d.as_nanos());
-    let staging_root = std::env::temp_dir().join(format!("myaicut-update-{}-{stamp}", std::process::id()));
-    let _ = std::fs::remove_dir_all(&staging_root);
-    std::fs::create_dir_all(&staging_root).map_err(|e| format!("Could not create {} ({e}).", staging_root.display()))?;
-    let extracted = run(Path::new("/usr/bin/ditto"), &["-x", "-k", path_str(&archive)?, path_str(&staging_root)?]);
-    if let Err(error) = extracted {
-        let _ = std::fs::remove_dir_all(&staging_root);
-        return Err(format!("Could not unpack the update ({error})."));
-    }
-    let staged = staging_root.join("MyAICut.app");
-    if let Err(error) = verify_bundle(&staged, &release.version_label()) {
-        let _ = std::fs::remove_dir_all(&staging_root);
-        return Err(error);
-    }
-    if events.send(InstallEvent::Prepared(Prepared { staged, staging_root, archive, version: release.version_label() })).is_err() {
-        return Err("The update window closed before the package was ready.".into());
-    }
-    Ok(())
+    Ok(archive)
+}
+
+#[cfg(target_os = "macos")]
+fn delta_asset<'a>(release: &'a Release, full: &craft_update::Asset, source_version: &str, source_hash: &str) -> Option<&'a craft_update::Asset> {
+    let version = release.version.as_ref()?;
+    let short_hash = source_hash.get(..16)?;
+    let arch = std::env::consts::ARCH;
+    let name = format!("myaicut-{version}-macos-{arch}-from-{source_version}-{short_hash}-delta.zip");
+    release.assets.iter().find(|asset| asset.name == name && asset.size > 0 && (full.size == 0 || asset.size < full.size))
 }
 
 #[cfg(not(target_arch = "wasm32"))]
@@ -643,5 +678,42 @@ mod tests {
         assert!(asset.name.contains("aarch64"));
         #[cfg(target_arch = "x86_64")]
         assert!(asset.name.contains("x86_64"));
+    }
+
+    #[cfg(target_os = "macos")]
+    #[test]
+    #[ignore = "requires two signed app bundles and the package files served over local HTTP"]
+    fn downloads_delta_and_falls_back_on_invalid_patch() {
+        let base = PathBuf::from(std::env::var_os("MYAICUT_TEST_BASE").unwrap());
+        let dist = PathBuf::from(std::env::var_os("MYAICUT_TEST_DIST").unwrap());
+        let server = std::env::var("MYAICUT_TEST_SERVER").unwrap();
+        let source_version = plist_value(&base.join("Contents/Info.plist"), "CFBundleShortVersionString").unwrap();
+        let hash = delta::base_hash(&base).unwrap();
+        let arch = std::env::consts::ARCH;
+        let full_name = format!("myaicut-{CURRENT_VERSION}-macos-{arch}-update.zip");
+        let delta_name = format!("myaicut-{CURRENT_VERSION}-macos-{arch}-from-{source_version}-{}-delta.zip", &hash[..16]);
+        let asset = |name: &str, file: &str| craft_update::Asset {
+            name: name.into(),
+            url: format!("{server}/{file}"),
+            size: std::fs::metadata(dist.join(file)).unwrap().len(),
+            sha256: Some(craft_update::http::sha256_file(&dist.join(file)).unwrap()),
+        };
+        let mut release = Release {
+            version: craft_update::parse_version(CURRENT_VERSION),
+            assets: vec![asset(&full_name, &full_name), asset(&delta_name, &delta_name)],
+            ..Release::default()
+        };
+        let (tx, _rx) = channel();
+        for (old_version, expected) in [(source_version.as_str(), delta_name.as_str()), ("0.0.0", full_name.as_str())] {
+            let prepared = prepare(&release, &base, old_version, &tx).unwrap();
+            assert!(prepared.archive.ends_with(expected));
+            std::fs::remove_dir_all(prepared.staging_root).unwrap();
+            std::fs::remove_file(prepared.archive).unwrap();
+        }
+        release.assets[1] = asset(&delta_name, "invalid-delta.zip");
+        let prepared = prepare(&release, &base, &source_version, &tx).unwrap();
+        assert!(prepared.archive.ends_with(&full_name));
+        std::fs::remove_dir_all(prepared.staging_root).unwrap();
+        std::fs::remove_file(prepared.archive).unwrap();
     }
 }
