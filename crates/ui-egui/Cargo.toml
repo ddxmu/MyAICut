@@ -67,9 +67,9 @@ toml = "1"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 craft-update = { workspace = true }
-base64 = "0.22"
+base64 = "0.23"
 tempfile = "3"
 ureq = { version = "3", default-features = false, features = ["rustls-no-provider", "platform-verifier", "gzip"] }
 
 [target.'cfg(target_os = "macos")'.dependencies]
-zip = { version = "7.2", default-features = false }
+zip = { version = "9.1", default-features = false }
