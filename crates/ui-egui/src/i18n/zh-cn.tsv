@@ -3750,6 +3750,7 @@
 	Audio output is not responding: playing without sound (check Settings ▸ Audio Hardware)	音频输出未响应：以无声音方式播放（检查 设置 ▸ 音频硬件）
 	Caption Export Settings	字幕导出设置
 	Check for Updates…	检查更新…
+	Version Update	版本升级
 	Checking for updates…	正在检查更新…
 	Could not check for updates:\n{error}	无法检查更新：\n{error}
 	Dark Theme	深色主题
