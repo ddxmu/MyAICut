@@ -180,7 +180,7 @@ impl Activity {
         self.pointers.retain(|p| p.result.is_some_and(|(end, _)| now.saturating_duration_since(end) < LINGER));
         let label = filmcraft_engine::find_command(id)
             .map(|c| c.label.to_owned())
-            .or_else(|| crate::menus::external_commands().iter().find(|c| c.id == id).map(|c| c.label))
+            .or_else(|| crate::menus::external_commands().iter().find(|c| c.id == id).map(|c| c.label.clone()))
             .unwrap_or_else(|| id.to_owned());
         let mut label = crate::i18n::t(&label).to_owned();
         label.truncate(label.floor_char_boundary(100));
